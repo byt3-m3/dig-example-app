@@ -3,6 +3,7 @@ package car_manager
 import (
 	"context"
 	"dig_practice/internal/application/car_manager/webserver"
+	"dig_practice/internal/application/car_manager/webserver/handlers"
 	"dig_practice/internal/application/car_manager/worker"
 	"dig_practice/internal/models/cars/repository"
 	"go.uber.org/dig"
@@ -37,16 +38,16 @@ func (a app) Run(ctx context.Context, component string) error {
 	if err := c.Provide(NewRepoConfig); err != nil {
 		log.Println("unable to add config dep")
 	}
-	if err := c.Provide(repository.NewCarRepo, dig.As(new(repository.CarRepo)), dig.As(new(webserver.CarGetter))); err != nil {
+	if err := c.Provide(repository.NewCarRepo, dig.As(new(repository.CarRepo))); err != nil {
 		log.Println("unable to add repo dep")
 	}
 	if err := c.Provide(webserver.New); err != nil {
-		log.Println("could not provide webserver")
+		log.Println("could not provide webserver: ", err)
 	}
 
-	//if err := c.Provide(handlers.NewCarHandler); err != nil {
-	//	log.Println("could not provide handler")
-	//}
+	if err := c.Provide(handlers.NewCarHandler); err != nil {
+		log.Println("could not provide handler")
+	}
 
 	switch component {
 	case "worker":

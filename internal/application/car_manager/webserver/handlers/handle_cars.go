@@ -4,14 +4,11 @@ import (
 	"dig_practice/internal/models/cars"
 	"dig_practice/internal/models/cars/repository"
 	"fmt"
-	"go.uber.org/dig"
 	"log"
 	"net/http"
 )
 
 type CarHandler struct {
-	dig.In
-
 	Repo       repository.CarRepo
 	RepoConfig *repository.CarRepoConfig
 }
@@ -31,7 +28,6 @@ func (h *CarHandler) HandleGet(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//
-//func NewCarHandler(cfg *repository.CarRepoConfig, carRepo repository.CarRepo) *CarHandler {
-//	return &CarHandler{Repo: carRepo, RepoConfig: cfg}
-//}
+func NewCarHandler(cfg *repository.CarRepoConfig, carRepo repository.CarRepo) *CarHandler {
+	return &CarHandler{Repo: carRepo, RepoConfig: cfg}
+}

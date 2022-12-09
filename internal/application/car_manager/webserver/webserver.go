@@ -16,7 +16,7 @@ type CarGetter interface {
 	GetCars() error
 }
 
-func New(carHandler *handlers.CarHandler, carGetter CarGetter) *Webserver {
+func New(carHandler *handlers.CarHandler) *Webserver {
 	return &Webserver{carHandler: carHandler}
 }
 
